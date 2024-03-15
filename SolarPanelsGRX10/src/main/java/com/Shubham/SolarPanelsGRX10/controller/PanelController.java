@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Shubham.SolarPanelsGRX10.entity.SolarPanelData;
+import com.Shubham.SolarPanelsGRX10.model.OutputData;
 import com.Shubham.SolarPanelsGRX10.service.PanelService;
 import com.Shubham.SolarPanelsGRX10.service.PanelServiceImpl;
 
@@ -21,12 +22,15 @@ public class PanelController {
 	PanelService panelService;
 	
 	@PostMapping("/postData")
-	public SolarPanelData calcData(@RequestBody SolarPanelData data) {
-		return panelService.saveSolarPanelData(data);
+	public OutputData calcData(@RequestBody SolarPanelData data) {
+		System.out.println("Data input in DB Completed!");
+		panelService.saveSolarPanelData(data);
+		return panelService.outputCalc(data);
 	}
 	
 	@GetMapping("/getAll")
 	public List<SolarPanelData> getAllData(){
 		return panelService.fetchAllSolarPanelDatas();
 	}
+	
 }
