@@ -1,6 +1,5 @@
 package com.Shubham.SolarPanelsGRX10.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +16,6 @@ public class PanelServiceImpl implements PanelService {
 	
 	@Autowired
 	SolarPanelRepository panelRepository;
-
 	@Override
 	public SolarPanelData saveSolarPanelData(SolarPanelData data) {
 		// TODO Auto-generated method stub
@@ -27,26 +25,22 @@ public class PanelServiceImpl implements PanelService {
 	@Override
 	public List<SolarPanelData> fetchAllSolarPanelDatas() {
 		// TODO Auto-generated method stub
-		List<SolarPanelData> listData = panelRepository.findAll();
-		return listData;
+		return panelRepository.findAll();
 	}
 
 	@Override
 	public SolarPanelData getSolarPanelDataById(Long id) {
 		// TODO Auto-generated method stub
 		Optional<SolarPanelData> data = panelRepository.findById(id);
-		if(data.isPresent()) {
-			return data.get();
-		}
-		return null;
+		return data.orElse(null);
 	}
 	
 	public OutputData outputCalc(SolarPanelData data) {
-		int noOfPanels = (int)Math.ceil(data.getBill()/420);
-		int areaNeeded = noOfPanels*2;
-		long capitalNeeded = (long)(noOfPanels/2.0)*60000;
-		double breakEvenYears = (capitalNeeded/(data.getBill()*12));
-		double totalVal = 25*12*data.getBill();
+		int noOfPanels = (int)Math.ceil(data.getBill()/PanelConstants.PANEL_CONSTANT);
+		int areaNeeded = noOfPanels*PanelConstants.PANEL_AREA;
+		long capitalNeeded = (long)noOfPanels*PanelConstants.PANEL_COST;
+		double breakEvenYears = (capitalNeeded/(data.getBill()*PanelConstants.YEAR_TO_MONTHS));
+		double totalVal = PanelConstants.TOTAL_VAL_CONSTANT*data.getBill();
 		double next25Earnings = totalVal-capitalNeeded;
 		return new OutputData(noOfPanels, areaNeeded, capitalNeeded, breakEvenYears, next25Earnings);
 	}
