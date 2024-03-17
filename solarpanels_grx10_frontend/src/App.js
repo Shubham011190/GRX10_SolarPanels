@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import UserForm from './components/UserForm';
+import CalculatorForm from './components/CalculatorForm';
 
 function App() {
   return (
     <div className="App">
-      <h1>Welcome to React</h1>
-      <UserForm></UserForm>
+      <CalculatorForm></CalculatorForm>
     </div>
   );
 }
