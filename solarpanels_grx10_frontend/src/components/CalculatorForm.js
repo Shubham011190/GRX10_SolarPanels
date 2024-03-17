@@ -13,7 +13,7 @@ const CalculatorForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/grx10/api/postData', formData);
+      const response = await axios.post('https://solarpanelsgrx10backend.onrender.com/grx10/api/postData', formData);
       setResult(response.data);
       console.log(response.data);
     } catch (error) {
